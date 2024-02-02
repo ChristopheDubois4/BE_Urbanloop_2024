@@ -36,7 +36,7 @@ docker compose -f docker-compose.slam.yml up -d
 docker compose -f docker-compose.slam.yml down
 ```
 
-## Utilisation des  fonctionnalités du plateau
+## Utilisation des fonctionnalités du plateau
 
 **Liste des containers**
 ``` bash

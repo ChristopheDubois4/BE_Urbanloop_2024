@@ -52,13 +52,13 @@ ros2 topic list
 ```
 
 
-- Information d'un topic
+- Avoir des informations sur un topic
 
 ``` bash
 ros2 topic info "nom_du_topic"
 ```
 
-Exemple : récupération des information sur le topic utilisé pour échanger les points du LIDAR
+Exemple : récupération des informations sur le topic utilisé pour échanger les points du LIDAR
 
 ``` bash
 ros2 topic info /shuttle_1/ouster/points 
