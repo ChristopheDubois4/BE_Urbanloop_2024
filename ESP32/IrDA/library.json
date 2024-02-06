@@ -1,0 +1,22 @@
+{
+  "name":"MaquetteLib",
+  "description":"Bibliotheque pour la maquette Urbanloop",
+  "keywords":"urbanloop,entites",
+  "authors":
+  {
+    "name": "Urbanloop",
+    "maintainer": true
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://gitlab.telecomnancy.univ-lorraine.fr/urbanloop/maquette-2023-library.git"
+  },
+  "version": "1.0",
+  "license": "MIT",
+  "frameworks": "arduino",
+  "platforms": "espressif32",
+  "build": {
+    "libCompatMode": 2
+  }
+}
