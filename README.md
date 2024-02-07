@@ -18,4 +18,9 @@ Dossier contenant les fichiers à ajouter sur la JETSON
 
 ## MQTT
 
-Documentation sur le Broker MQTT avec un exemple en python
+- Documentation sur le Broker MQTT avec un exemple en python
+- Dossier du projet Unity
+
+## detection_obstacle
+
+Détéction d'obstacles via traitement d'image
