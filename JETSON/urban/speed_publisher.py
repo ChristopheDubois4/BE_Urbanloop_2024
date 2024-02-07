@@ -78,9 +78,6 @@ class ImuToSpeedConverter(Node):
         # Integrate acceleration to get velocity
         speed_x = self.previous_speed_x + acceleration_x * dt
         self.previous_speed_x = speed_x 
-
-        # Publish velocity data to MQTT topic
-        self.mqtt_client.publish('/speed', str(speed_x))
         
         
     def publish_speed(self):
