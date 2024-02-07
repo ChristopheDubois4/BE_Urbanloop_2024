@@ -46,6 +46,8 @@ class SpeedController(Node):
 
         # Initialize flag for obstacle detection
         self.obstacle_detected = False
+        
+        self.desired_speed = 0
 
     def pi_controller(self, error): 
         # Get current time
