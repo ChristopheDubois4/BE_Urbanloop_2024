@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "persistence.h"
 
-extern PersistentByte IdEntite;
+extern uint8_t IdEntite;
 
 extern PersistentByte IdBoucleDestination;
 extern PersistentByte IdStationDestination; // La station actuelle a l'ID 141

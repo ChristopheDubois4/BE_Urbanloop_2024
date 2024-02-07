@@ -61,7 +61,9 @@ void ecouteCapsule(void *parameter)
 			lastSeenTime = currentTime;
 
 			// Envoie de la consigne de vitesse du radar à la capsule
-			consigneVitesse(Speed.getValue(), idCapsule);
+			consigneVitesse(Speed, idCapsule);
+
+			Speed += 4;
 		}
 	}
 }
@@ -80,7 +82,7 @@ void changementVitesse(void *parameter)
 			nouvelleVitesse = Serial.parseInt();
 			if (nouvelleVitesse >= 0 && nouvelleVitesse <= 4095)
 			{
-					Speed.setValue(nouvelleVitesse);
+					Speed = nouvelleVitesse;
 
 					ESP_LOGI(TAG, "Nouvelle consigne de vitesse: %d", nouvelleVitesse);
 			}

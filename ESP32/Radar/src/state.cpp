@@ -1,5 +1,5 @@
 #include "state.h"
 
-PersistentByte Speed{"speed", 128};
+uint8_t Speed = 128;
 
 PersistentByte IdRadar{KeyId, DefaultId};

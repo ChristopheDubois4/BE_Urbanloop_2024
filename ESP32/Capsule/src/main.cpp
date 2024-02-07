@@ -21,9 +21,10 @@
 
 // TAG pour les logs
 static const char *TAG_IRDA = "Communication IRDA";
+static const char *TAG_JETSON = "Communication Jetson";
 
 // Définition de l'IRDA
-Irda irda{IdEntite.getValue()};
+Irda irda{IdEntite};
 
 struct irda_packet donnees_recues;
 
@@ -40,7 +41,7 @@ void vTaskSendId(void *params)
 
 	for (;;)
 	{
-		irda.send_annonce_capsule(IdEntite.getValue(), IdStationDestination.getValue(), IdBoucleDestination.getValue(), IdBoucleActuelle.getValue());
+		irda.send_annonce_capsule(IdEntite, IdStationDestination.getValue(), IdBoucleDestination.getValue(), IdBoucleActuelle.getValue());
 
 		ESP_LOGD(TAG_IRDA, "Paquet IRDA envoyé: IDPOD : %u, Station: %u, Boucle: %u", IdEntite.getValue(), IdStationDestination.getValue(), IdBoucleDestination.getValue());
 
@@ -64,10 +65,42 @@ void vTaskReceiveIrda(void *params)
 			{
 				case Irda_Vitesse:
 					Vitesse = donnees_recues.data1;
-					ESP_LOGI(TAG_IRDA, "Nouvelle valeur de vitesse : %u", Vitesse);
+
+					if (Vitesse > 0)
+					{
+						State = 1;
+					}
+					else
+					{
+						State = 0;
+					}
+
+					ESP_LOGI(TAG_IRDA, "Nouvelle valeur de vitesse : |%u|", Vitesse);
 					break;
 			}
 		}
+	}
+}
+
+void vTaskReceiveJetson(void* params)
+{
+	int nouvelleVitesse;
+
+	for (;;)
+	{
+		// On lit la nouvelle consigne de vitesse depuis le moniteur série
+		if (Serial.available() > 0)
+		{
+			nouvelleVitesse = Serial.parseInt();
+			if (nouvelleVitesse >= 0 && nouvelleVitesse <= 255)
+			{
+				Vitesse = nouvelleVitesse;
+
+				ESP_LOGI(TAG_JETSON, "Nouvelle consigne de vitesse: |%d|", nouvelleVitesse);
+			}
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(300));
 	}
 }
 
@@ -128,6 +161,16 @@ void setup()
 		3,								 /* Priority of the task */
 		NULL,							 /* Task handle. */
 		1								 /* Core where the task should run */
+	);
+
+	xTaskCreatePinnedToCore(
+		vTaskReceiveJetson,	  // Task function.
+		"vTaskReceiveJetson", // name of task.
+		10000,				  // Stack size of the task
+		NULL,				  // parameter of the task
+		1,					  // priority of the task
+		NULL,				  // Task handle to keep track of created task
+		0					  // pin task to core 0
 	);
 
 	// Création de la tâche d'allumage des LEDs gauche/droite
