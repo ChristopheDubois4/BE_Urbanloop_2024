@@ -142,6 +142,6 @@ Il est possible d'ouvrir directement le rosbag dans foxglove *(ouvrir un fichier
 ros2 bag play nom_du_rosbag
 ```
 
-**RPOBLEMES**
+**PROBLEMES**
 
 Pour l'instant le rosbag lag, même quand il est directement enregistré sur le plateau de capteur ce qui rend son exploitation impossible.

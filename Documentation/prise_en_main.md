@@ -1,6 +1,20 @@
 # Prise en main
 
+## Assemblage
+
+Pour plus de précision, cf [getting started](https://gitlab.univ-lorraine.fr/coll/l-inp/ensem/plateforme_pedagogique_urbanloop/plateau_capteurs/shuttle-sensor-tray/-/blob/main/doc/source/getting_started.rst?ref_type=heads)
+
+- Plateau assemblé
+
+![plateau_monte](images/plateau_monte.jpg)
+
+- Connexion au réseau éthernet de l'école
+
+![206_reseau](images/206_reseau.jpg)
+
 ## Accès au plateau de capteurs
+
+Les interfaces réseaux de la carte ont tendance à être désactivées au lancement de l’OS. Aller dans **Settings->Network** et vérifier que **mgbe0** et **mgbe1** sont activées.
 
 **Compte ubuntu**
 - User

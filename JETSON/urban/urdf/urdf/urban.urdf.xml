@@ -1,0 +1,17 @@
+<robot name="urban">
+  <link name="urban"/>
+  <link name="oak-d-base-frame"/>
+  <link name="os_sensor"/>
+
+  <joint name="oak-d-pro_joint" type="fixed">
+    <origin xyz="-0.05 0 0"/>
+    <parent link="urban"/>
+    <child link="oak-d-base-frame"/>
+  </joint>
+
+  <joint name="ouster_joint" type="fixed">
+    <origin xyz="0.1 0.1 0"/>
+    <parent link="urban"/>
+    <child link="os_sensor"/>
+  </joint>
+</robot>

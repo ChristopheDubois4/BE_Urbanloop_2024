@@ -1,0 +1,76 @@
+version: '3'
+
+services:
+  foxglove-bridge:
+    image: foxglove-bridge
+    command: ros2 launch foxglove_bridge foxglove_bridge_launch.xml
+    network_mode: 'host'
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=$CYCLONEDDS_URI
+  ouster:
+    image: ouster-ros
+    command: ros2 launch ouster_ros driver.launch.py viz:=False ouster_ns:=/shuttle_1/ouster
+    network_mode: 'host'
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=$CYCLONEDDS_URI
+    volumes:
+      - /home/shuttle/ros2-ouster/config/params.yml:/opt/ros/humble/install/share/ouster_ros/config/driver_params.yaml
+
+  lidarslam:
+    image: lidarslam
+    command: ros2 launch lidarslam lidarslam.launch.py
+    volumes:
+      - /home/shuttle/ros2-ouster/lidarslam.launch.py:/opt/ros/humble/install/share/lidarslam/launch/lidarslam.launch.py
+      - /home/shuttle/lidarslam/lidarslam-shuttle.yml:/opt/ros/humble/install/share/lidarslam/param/lidarslam-shuttle.yml      
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=$CYCLONEDDS_URI
+    network_mode: 'host'
+    
+    
+  depthai:
+    image: depthai-ros
+    command: ros2 launch depthai_ros_driver camera.launch.py camera_model:=OAK-D-PRO use_rviz:=false params_file:=/config/camera.yml
+    privileged: true
+    volumes:
+      - /dev/:/dev/
+      - ./depthai-ros/config:/config
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=$CYCLONEDDS_URI
+    network_mode: 'host'
+
+  shuttle:
+    image: shuttle
+    command: ros2 launch shuttle shuttle.launch.py
+    network_mode: 'host'
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=$CYCLONEDDS_URI
+  imu:
+    image: sbg-ellipse-d
+    command: bash -c "source install/setup.bash && ros2 launch sbg_driver sbg_device_launch_extended.py params_file:=/config/ellipse-D.yml sbg_ns:=/shuttle_1"
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    network_mode: 'host'
+    privileged: true
+    volumes:
+      - /dev/:/dev/
+      - ./sbg-ellipse-d/config/:/config/
+      - ./sbg-ellipse-d/sbg_device_launch_extended.py:/ros2_ws/install/sbg_driver/share/sbg_driver/launch/sbg_device_launch_extended.py
+  urban:
+    image: urban
+    command: ros2 launch urban urban.launch.py
+    network_mode: 'host'
+    environment:
+      - ROS_DOMAIN_ID=$ROS_DOMAIN_ID
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - CYCLONEDDS_URI=$CYCLONEDDS_URI

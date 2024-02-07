@@ -18,11 +18,14 @@ Le serveur MQTT est hébergé sur le site [hivemq](http://broker.hivemq.com)
 
 MQTT Explorer est une apllication permettant d'intéragir avec un MQTT Broker
 
-- 
 
 - **Connexion** 
 
-Ici, la connexion se fait de manière sécurisé (tls activé). Il faut donc ajouter ```:8883/mqtt``` à l'adresse
+Ici, la connexion se fait de manière sécurisé (tls activé). Il faut donc ajouter ```:8883/mqtt``` à l'adresse 
+
+```
+cf9b375e8064414397c16aacf9b8e9cb.s2.eu.hivemq.cloud:8883/mqtt
+```
 ![connexion](images/connexion.png)
 
 Il faut également supprimer le champ Client Id dans la rubrique *ADVANCED*
